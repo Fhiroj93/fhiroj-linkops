@@ -1,10 +1,12 @@
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
-import { LayoutDashboard, Inbox, Calendar, BarChart3, Settings, Bell, Plus, LogOut, Menu, X } from "lucide-react";
+import { LayoutDashboard, Inbox, Calendar, BarChart3, Settings, Bell, Plus, LogOut, Menu, X, Sun, Moon } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/lib/auth-context";
+import { useTheme } from "@/lib/theme-context";
 import { NewPostPanel } from "@/components/shared/NewPostPanel";
 import { Footer } from "@/components/shared/Footer";
+
 
 const nav = [
   { to: "/dashboard", label: "Dashboard", Icon: LayoutDashboard },
