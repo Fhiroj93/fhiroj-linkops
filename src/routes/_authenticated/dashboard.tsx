@@ -235,17 +235,18 @@ function Dashboard() {
 function StatCard({ label, value, accent, pulse }: { label: string; value: number; accent?: boolean; pulse?: boolean }) {
   return (
     <div
-      className={pulse ? "card-shell pulse-amber" : "card-shell"}
+      className={pulse ? "card-shell pulse-amber hover-lift" : "card-shell hover-lift"}
       style={{
-        borderColor: accent && value > 0 ? "rgba(245,166,35,0.4)" : "var(--border)",
+        borderColor: accent && value > 0 ? "color-mix(in oklab, var(--brand) 40%, transparent)" : "var(--border)",
       }}
     >
-      <div style={{ fontSize: 11, color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: 0.06, fontWeight: 600 }}>
+      <div className="section-label" style={{ color: "var(--text-secondary)" }}>
         {label}
       </div>
-      <div style={{ fontSize: 28, fontWeight: 700, marginTop: 6, color: accent ? "var(--brand)" : "var(--foreground)" }}>
+      <div className="font-display tabular" style={{ fontSize: 32, fontWeight: 700, marginTop: 6, color: accent ? "var(--brand)" : "var(--foreground)", letterSpacing: "-0.02em" }}>
         {value}
       </div>
     </div>
   );
 }
+

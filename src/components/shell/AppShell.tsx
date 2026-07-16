@@ -1,10 +1,12 @@
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
-import { LayoutDashboard, Inbox, Calendar, BarChart3, Settings, Bell, Plus, LogOut, Menu, X } from "lucide-react";
+import { LayoutDashboard, Inbox, Calendar, BarChart3, Settings, Bell, Plus, LogOut, Menu, X, Sun, Moon } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/lib/auth-context";
+import { useTheme } from "@/lib/theme-context";
 import { NewPostPanel } from "@/components/shared/NewPostPanel";
 import { Footer } from "@/components/shared/Footer";
+
 
 const nav = [
   { to: "/dashboard", label: "Dashboard", Icon: LayoutDashboard },
@@ -20,7 +22,9 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
   const [newPostOpen, setNewPostOpen] = useState(false);
   const [unread, setUnread] = useState(0);
   const { signOut, user } = useAuth();
+  const { theme, toggle: toggleTheme } = useTheme();
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const lastSeen = Number(localStorage.getItem("lastPendingSeen") || 0);
@@ -165,8 +169,29 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
           >
             <Menu size={20} />
           </button>
-          <h1 style={{ fontSize: 20, fontWeight: 700, margin: 0 }}>{title}</h1>
+          <h1 className="font-display" style={{ fontSize: 22, fontWeight: 700, margin: 0, letterSpacing: "-0.01em" }}>{title}</h1>
           <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 10 }}>
+            <button
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+              style={{
+                position: "relative",
+                background: "var(--surface)",
+                border: "1px solid var(--border)",
+                color: "var(--text-secondary)",
+                width: 38,
+                height: 38,
+                borderRadius: 10,
+                cursor: "pointer",
+                display: "grid",
+                placeItems: "center",
+                overflow: "hidden",
+              }}
+            >
+              <Sun size={16} style={{ position: "absolute", transition: "transform 300ms ease, opacity 300ms ease", transform: theme === "light" ? "rotate(0) scale(1)" : "rotate(-90deg) scale(0.4)", opacity: theme === "light" ? 1 : 0 }} />
+              <Moon size={16} style={{ position: "absolute", transition: "transform 300ms ease, opacity 300ms ease", transform: theme === "dark" ? "rotate(0) scale(1)" : "rotate(90deg) scale(0.4)", opacity: theme === "dark" ? 1 : 0 }} />
+            </button>
+
             <button
               onClick={clearUnread}
               style={{
@@ -221,7 +246,7 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
             </button>
           </div>
         </header>
-        <main style={{ padding: "24px 32px", flex: 1 }}>{children}</main>
+        <main key={title} className="page-in" style={{ padding: "24px 32px", flex: 1 }}>{children}</main>
         <Footer />
       </div>
 
