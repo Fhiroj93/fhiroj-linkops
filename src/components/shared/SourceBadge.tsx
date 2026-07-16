@@ -15,7 +15,7 @@ export function SourceBadge({ source }: { source: string | null }) {
         alignItems: "center",
         gap: 5,
         padding: "3px 9px",
-        borderRadius: 8,
+        borderRadius: 999,
         background: "var(--surface-2)",
         color: "var(--text-secondary)",
         fontSize: 11,
