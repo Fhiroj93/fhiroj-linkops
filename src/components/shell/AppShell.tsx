@@ -169,8 +169,29 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
           >
             <Menu size={20} />
           </button>
-          <h1 style={{ fontSize: 20, fontWeight: 700, margin: 0 }}>{title}</h1>
+          <h1 className="font-display" style={{ fontSize: 22, fontWeight: 700, margin: 0, letterSpacing: "-0.01em" }}>{title}</h1>
           <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 10 }}>
+            <button
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+              style={{
+                position: "relative",
+                background: "var(--surface)",
+                border: "1px solid var(--border)",
+                color: "var(--text-secondary)",
+                width: 38,
+                height: 38,
+                borderRadius: 10,
+                cursor: "pointer",
+                display: "grid",
+                placeItems: "center",
+                overflow: "hidden",
+              }}
+            >
+              <Sun size={16} style={{ position: "absolute", transition: "transform 300ms ease, opacity 300ms ease", transform: theme === "light" ? "rotate(0) scale(1)" : "rotate(-90deg) scale(0.4)", opacity: theme === "light" ? 1 : 0 }} />
+              <Moon size={16} style={{ position: "absolute", transition: "transform 300ms ease, opacity 300ms ease", transform: theme === "dark" ? "rotate(0) scale(1)" : "rotate(90deg) scale(0.4)", opacity: theme === "dark" ? 1 : 0 }} />
+            </button>
+
             <button
               onClick={clearUnread}
               style={{
