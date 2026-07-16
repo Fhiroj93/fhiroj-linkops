@@ -22,7 +22,9 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
   const [newPostOpen, setNewPostOpen] = useState(false);
   const [unread, setUnread] = useState(0);
   const { signOut, user } = useAuth();
+  const { theme, toggle: toggleTheme } = useTheme();
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const lastSeen = Number(localStorage.getItem("lastPendingSeen") || 0);
