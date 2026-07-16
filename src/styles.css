@@ -48,16 +48,16 @@
 /* Dark theme (default) */
 :root,
 :root[data-theme="dark"] {
-  --background: #0F1420;
-  --surface: #171D2E;
-  --surface-2: #1E2537;
-  --border: #2A3247;
+  --background: #000000;
+  --surface: #0D0D0D;
+  --surface-2: #1A1A1A;
+  --border: #1F1F1F;
   --brand: #F5A623;
   --brand-hover: #FFB84D;
-  --brand-foreground: #0F1420;
-  --foreground: #F5F6F8;
-  --text-secondary: #9098AB;
-  --text-muted: #5C6478;
+  --brand-foreground: #000000;
+  --foreground: #FFFFFF;
+  --text-secondary: #A0A0A0;
+  --text-muted: #6B6B6B;
   --success: #4ADE80;
   --warning: #FACC15;
   --danger: #F87171;
@@ -66,9 +66,24 @@
   --score-mid-bg: rgba(250, 204, 21, 0.12);
   --score-bad-bg: rgba(248, 113, 113, 0.12);
   --shadow-card: none;
-  --shadow-card-hover: 0 8px 20px rgba(0,0,0,0.35);
+  --shadow-card-hover: 0 8px 20px rgba(0,0,0,0.6);
   --glow: rgba(245, 166, 35, 0.18);
   --radius: 14px;
+  --font-display: "Fraunces", "Playfair Display", Georgia, serif;
+}
+
+/* In dark theme: force pill-shaped buttons, nav links, and primary CTAs */
+:root[data-theme="dark"] button,
+:root[data-theme="dark"] aside a {
+  border-radius: 999px !important;
+}
+:root[data-theme="dark"] h1,
+:root[data-theme="dark"] h2,
+:root[data-theme="dark"] h3,
+:root[data-theme="dark"] h4,
+:root[data-theme="dark"] .font-display {
+  font-family: "Fraunces", "Playfair Display", Georgia, serif;
+  letter-spacing: -0.02em;
 }
 
 /* Light — LinkedIn Style */
