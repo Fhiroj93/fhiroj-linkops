@@ -246,7 +246,7 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
             </button>
           </div>
         </header>
-        <main style={{ padding: "24px 32px", flex: 1 }}>{children}</main>
+        <main key={title} className="page-in" style={{ padding: "24px 32px", flex: 1 }}>{children}</main>
         <Footer />
       </div>
 
