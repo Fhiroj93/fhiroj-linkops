@@ -50,11 +50,33 @@ export function NewPostPanel({ open, onClose }: Props) {
       status: "scheduled",
       scheduled_for,
     });
-    setBusy(false);
     if (error) {
+      setBusy(false);
       toast.error("Create failed: " + error.message);
       return;
     }
+
+    try {
+      await fetch("https://n8n.srv971626.hstgr.cloud/webhook/linkops-text", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          topic,
+          content,
+          content_type: media,
+          image_prompt: media === "image" ? imgInstr || null : null,
+          ai_generated: aiGen,
+          scheduled_for,
+          schedule_later: scheduleLater,
+          submitted_at: new Date().toISOString(),
+        }),
+      });
+    } catch (err) {
+      console.error("Webhook post failed", err);
+      toast.error("Webhook trigger failed");
+    }
+
+    setBusy(false);
     toast.success(
       scheduleLater
         ? `Scheduled for ${new Date(scheduled_for).toLocaleString()}`
