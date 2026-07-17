@@ -162,14 +162,15 @@ html, body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 400px;
-  height: 400px;
+  width: 180px;
+  height: 180px;
   pointer-events: none;
   z-index: 9999;
-  background: radial-gradient(circle at center, var(--glow), transparent 60%);
+  background: radial-gradient(circle at center, var(--glow), transparent 65%);
   mix-blend-mode: screen;
   will-change: transform;
   transition: opacity 200ms ease;
+  opacity: 0.85;
 }
 :root[data-theme="light"] .cursor-glow { mix-blend-mode: multiply; }
 @media (hover: none) { .cursor-glow { display: none; } }
