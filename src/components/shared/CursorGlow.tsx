@@ -14,7 +14,7 @@ export function CursorGlow() {
       cx += (tx - cx) * 0.18;
       cy += (ty - cy) * 0.18;
       if (ref.current) {
-        ref.current.style.transform = `translate3d(${cx - 200}px, ${cy - 200}px, 0)`;
+        ref.current.style.transform = `translate3d(${cx - 90}px, ${cy - 90}px, 0)`;
       }
       if (Math.abs(tx - cx) > 0.5 || Math.abs(ty - cy) > 0.5) {
         raf = requestAnimationFrame(tick);
