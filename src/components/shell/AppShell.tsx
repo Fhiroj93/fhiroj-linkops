@@ -71,21 +71,11 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "0 8px 22px" }}>
-          <div
-            style={{
-              width: 32,
-              height: 32,
-              borderRadius: 10,
-              background: "var(--brand)",
-              display: "grid",
-              placeItems: "center",
-              color: "var(--brand-foreground)",
-              fontWeight: 800,
-            }}
-          >
-            L
-          </div>
-          <div style={{ fontWeight: 700, fontSize: 15, color: "var(--foreground)" }}>LinkOps</div>
+          <img
+            src="/linkops-logo.png"
+            alt="LinkOps"
+            style={{ height: 30, width: "auto", objectFit: "contain" }}
+          />
           <button
             onClick={() => setMobileOpen(false)}
             className="mobile-close"
