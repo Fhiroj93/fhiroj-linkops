@@ -33,9 +33,8 @@ function AuthPage() {
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--background)" }}>
       <div style={{ flex: 1, display: "grid", placeItems: "center", padding: 20 }}>
         <div className="card-shell" style={{ width: "100%", maxWidth: 400 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 22 }}>
-            <div style={{ width: 34, height: 34, borderRadius: 10, background: "var(--brand)", display: "grid", placeItems: "center", color: "var(--brand-foreground)", fontWeight: 800 }}>L</div>
-            <div style={{ fontWeight: 700, fontSize: 18 }}>LinkOps</div>
+          <div style={{ display: "flex", alignItems: "center", marginBottom: 22 }}>
+            <img src="/linkops-logo.png" alt="LinkOps" style={{ height: 36, width: "auto", objectFit: "contain" }} />
           </div>
           <div className="section-label" style={{ marginBottom: 6 }}>
             {mode === "signin" ? "Welcome back" : "Create account"}
