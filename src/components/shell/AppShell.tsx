@@ -70,16 +70,16 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
           height: "100vh",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "0 8px 22px" }}>
+        <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", padding: "4px 8px 26px" }}>
           <img
             src="/linkops-logo.png"
             alt="LinkOps"
-            style={{ height: 30, width: "auto", objectFit: "contain" }}
+            style={{ width: "100%", maxWidth: 190, height: "auto", objectFit: "contain", display: "block" }}
           />
           <button
             onClick={() => setMobileOpen(false)}
             className="mobile-close"
-            style={{ marginLeft: "auto", background: "transparent", border: 0, color: "var(--text-secondary)" }}
+            style={{ position: "absolute", right: 0, top: 0, background: "transparent", border: 0, color: "var(--text-secondary)" }}
           >
             <X size={18} />
           </button>
