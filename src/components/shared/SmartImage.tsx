@@ -40,7 +40,8 @@ interface Props {
 }
 
 export function SmartImage({ src, alt = "Post image", size, onClick }: Props) {
-  const [stage, setStage] = useState<0 | 1 | 2>(0);
+  const urls = candidates(src);
+  const [idx, setIdx] = useState(0);
   const [loaded, setLoaded] = useState(false);
 
   const base: React.CSSProperties = {
@@ -53,11 +54,23 @@ export function SmartImage({ src, alt = "Post image", size, onClick }: Props) {
     flexShrink: 0,
   };
 
-  if (stage === 2) {
+  if (idx >= urls.length) {
     return (
-      <div style={{ ...base, display: "grid", placeItems: "center", color: "var(--text-muted)" }}>
+      <a
+        href={src}
+        target="_blank"
+        rel="noreferrer"
+        title="Open image in a new tab"
+        style={{
+          ...base,
+          display: "grid",
+          placeItems: "center",
+          color: "var(--text-muted)",
+          textDecoration: "none",
+        }}
+      >
         <ImageOff size={Math.max(14, size / 5)} />
-      </div>
+      </a>
     );
   }
 
@@ -68,13 +81,14 @@ export function SmartImage({ src, alt = "Post image", size, onClick }: Props) {
       className="hover-lift"
     >
       <img
-        src={stage === 0 ? src : proxied(src)}
+        key={urls[idx]}
+        src={urls[idx]}
         alt={alt}
         loading="lazy"
         decoding="async"
         referrerPolicy="no-referrer"
         onLoad={() => setLoaded(true)}
-        onError={() => setStage((s) => (s === 0 ? 1 : 2))}
+        onError={() => setIdx((i) => i + 1)}
         style={{
           width: "100%",
           height: "100%",
@@ -86,4 +100,5 @@ export function SmartImage({ src, alt = "Post image", size, onClick }: Props) {
       />
     </div>
   );
+
 }
