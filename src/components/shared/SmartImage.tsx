@@ -3,11 +3,34 @@ import { ImageOff } from "lucide-react";
 
 /**
  * Renders remote post images reliably on any host (Netlify, Vercel, etc.).
- * LinkedIn / CDN images often block hotlinking via Referer checks, so we send
- * no referrer and fall back to an image proxy, then to a placeholder tile.
+ * - Google Drive share links are rewritten to direct thumbnail/view URLs.
+ * - LinkedIn / CDN images block hotlinking via Referer checks, so we send no
+ *   referrer and fall back to an image proxy, then to a placeholder tile.
  */
-const proxied = (url: string) =>
-  `https://images.weserv.nl/?url=${encodeURIComponent(url.replace(/^https?:\/\//, ""))}&w=800&output=webp`;
+const driveId = (url: string): string | null => {
+  const m =
+    url.match(/drive\.google\.com\/file\/d\/([\w-]+)/) ||
+    url.match(/[?&]id=([\w-]+)/) ||
+    url.match(/drive\.google\.com\/open\?id=([\w-]+)/);
+  return m ? m[1] : null;
+};
+
+/** Ordered list of candidate URLs to try for a given source. */
+function candidates(url: string): string[] {
+  const id = driveId(url);
+  if (id) {
+    return [
+      `https://drive.google.com/thumbnail?id=${id}&sz=w1200`,
+      `https://lh3.googleusercontent.com/d/${id}=w1200`,
+      `https://drive.google.com/uc?export=view&id=${id}`,
+    ];
+  }
+  return [
+    url,
+    `https://images.weserv.nl/?url=${encodeURIComponent(url.replace(/^https?:\/\//, ""))}&w=1000&output=webp`,
+  ];
+}
+
 
 interface Props {
   src: string;
