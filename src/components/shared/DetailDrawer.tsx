@@ -8,6 +8,7 @@ import { SourceBadge, ContentTypeIcon } from "./SourceBadge";
 import { X, Info, Lightbulb, FileText } from "lucide-react";
 import { format } from "date-fns";
 import { PostActions } from "./PostActions";
+import { SmartImage } from "./SmartImage";
 
 interface Props {
   post: Post | null;
