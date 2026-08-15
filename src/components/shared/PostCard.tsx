@@ -131,26 +131,27 @@ export function PostCard({ post, onClick }: Props) {
       )}
 
       {post.image_urls && post.image_urls.length > 0 && (
-        <div style={{ display: "flex", gap: 6 }}>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           {post.image_urls.slice(0, 4).map((u, i) => (
             <div key={i} style={{ position: "relative" }}>
-              <img
+              <SmartImage
                 src={u}
-                alt=""
-                style={{ width: 68, height: 68, objectFit: "cover", borderRadius: 8 }}
+                size={84}
+                onClick={() => window.open(u, "_blank", "noreferrer")}
               />
               {i === 3 && post.image_urls!.length > 4 && (
                 <div
                   style={{
                     position: "absolute",
                     inset: 0,
-                    background: "rgba(0,0,0,0.55)",
-                    borderRadius: 8,
+                    background: "rgba(0,0,0,0.6)",
+                    borderRadius: 12,
                     display: "grid",
                     placeItems: "center",
                     color: "#fff",
                     fontWeight: 700,
                     fontSize: 13,
+                    pointerEvents: "none",
                   }}
                 >
                   +{post.image_urls!.length - 4}
@@ -160,6 +161,7 @@ export function PostCard({ post, onClick }: Props) {
           ))}
         </div>
       )}
+
 
       {post.document_url && (
         <a
