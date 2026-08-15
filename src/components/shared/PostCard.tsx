@@ -5,6 +5,7 @@ import { ScoreBadge } from "./ScoreBadge";
 import { StatusPill } from "./StatusPill";
 import { SourceBadge, ContentTypeIcon } from "./SourceBadge";
 import { PostActions } from "./PostActions";
+import { SmartImage } from "./SmartImage";
 import { Info, Lightbulb, FileText } from "lucide-react";
 import { toast } from "sonner";
 

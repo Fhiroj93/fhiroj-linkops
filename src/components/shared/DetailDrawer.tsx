@@ -153,17 +153,13 @@ export function DetailDrawer({ post, onClose }: Props) {
         )}
 
         {post.image_urls && post.image_urls.length > 0 && (
-          <div style={{ display: "flex", gap: 8, marginTop: 12, flexWrap: "wrap" }}>
-            {post.image_urls.slice(0, 4).map((u, i) => (
-              <img
-                key={i}
-                src={u}
-                alt=""
-                style={{ width: 100, height: 100, objectFit: "cover", borderRadius: 8 }}
-              />
+          <div style={{ display: "flex", gap: 10, marginTop: 12, flexWrap: "wrap" }}>
+            {post.image_urls.map((u, i) => (
+              <SmartImage key={i} src={u} size={120} onClick={() => window.open(u, "_blank", "noreferrer")} />
             ))}
           </div>
         )}
+
 
         {post.document_url && (
           <a
