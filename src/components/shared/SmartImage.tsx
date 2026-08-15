@@ -3,11 +3,34 @@ import { ImageOff } from "lucide-react";
 
 /**
  * Renders remote post images reliably on any host (Netlify, Vercel, etc.).
- * LinkedIn / CDN images often block hotlinking via Referer checks, so we send
- * no referrer and fall back to an image proxy, then to a placeholder tile.
+ * - Google Drive share links are rewritten to direct thumbnail/view URLs.
+ * - LinkedIn / CDN images block hotlinking via Referer checks, so we send no
+ *   referrer and fall back to an image proxy, then to a placeholder tile.
  */
-const proxied = (url: string) =>
-  `https://images.weserv.nl/?url=${encodeURIComponent(url.replace(/^https?:\/\//, ""))}&w=800&output=webp`;
+const driveId = (url: string): string | null => {
+  const m =
+    url.match(/drive\.google\.com\/file\/d\/([\w-]+)/) ||
+    url.match(/[?&]id=([\w-]+)/) ||
+    url.match(/drive\.google\.com\/open\?id=([\w-]+)/);
+  return m ? m[1] : null;
+};
+
+/** Ordered list of candidate URLs to try for a given source. */
+function candidates(url: string): string[] {
+  const id = driveId(url);
+  if (id) {
+    return [
+      `https://drive.google.com/thumbnail?id=${id}&sz=w1200`,
+      `https://lh3.googleusercontent.com/d/${id}=w1200`,
+      `https://drive.google.com/uc?export=view&id=${id}`,
+    ];
+  }
+  return [
+    url,
+    `https://images.weserv.nl/?url=${encodeURIComponent(url.replace(/^https?:\/\//, ""))}&w=1000&output=webp`,
+  ];
+}
+
 
 interface Props {
   src: string;
@@ -17,7 +40,8 @@ interface Props {
 }
 
 export function SmartImage({ src, alt = "Post image", size, onClick }: Props) {
-  const [stage, setStage] = useState<0 | 1 | 2>(0);
+  const urls = candidates(src);
+  const [idx, setIdx] = useState(0);
   const [loaded, setLoaded] = useState(false);
 
   const base: React.CSSProperties = {
@@ -30,11 +54,23 @@ export function SmartImage({ src, alt = "Post image", size, onClick }: Props) {
     flexShrink: 0,
   };
 
-  if (stage === 2) {
+  if (idx >= urls.length) {
     return (
-      <div style={{ ...base, display: "grid", placeItems: "center", color: "var(--text-muted)" }}>
+      <a
+        href={src}
+        target="_blank"
+        rel="noreferrer"
+        title="Open image in a new tab"
+        style={{
+          ...base,
+          display: "grid",
+          placeItems: "center",
+          color: "var(--text-muted)",
+          textDecoration: "none",
+        }}
+      >
         <ImageOff size={Math.max(14, size / 5)} />
-      </div>
+      </a>
     );
   }
 
@@ -45,13 +81,14 @@ export function SmartImage({ src, alt = "Post image", size, onClick }: Props) {
       className="hover-lift"
     >
       <img
-        src={stage === 0 ? src : proxied(src)}
+        key={urls[idx]}
+        src={urls[idx]}
         alt={alt}
         loading="lazy"
         decoding="async"
         referrerPolicy="no-referrer"
         onLoad={() => setLoaded(true)}
-        onError={() => setStage((s) => (s === 0 ? 1 : 2))}
+        onError={() => setIdx((i) => i + 1)}
         style={{
           width: "100%",
           height: "100%",
@@ -63,4 +100,5 @@ export function SmartImage({ src, alt = "Post image", size, onClick }: Props) {
       />
     </div>
   );
+
 }
