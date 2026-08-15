@@ -311,3 +311,76 @@ tbody tr, [role="row"] { animation: row-in 360ms cubic-bezier(0.16, 1, 0.3, 1) b
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   .cursor-glow { display: none; }
 }
+
+/* ---------- Visual polish pass ---------- */
+body {
+  font-feature-settings: "cv05" 1, "ss01" 1, "kern" 1;
+  letter-spacing: -0.005em;
+}
+
+.section-label {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  opacity: 0.95;
+}
+
+.card-shell {
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--foreground) 3%, transparent),
+    transparent 42%
+  );
+  border-radius: 16px;
+  position: relative;
+}
+.card-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  border-radius: 16px 16px 0 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--brand) 45%, transparent),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 260ms ease;
+  pointer-events: none;
+}
+.card-shell:hover::before { opacity: 1; }
+
+.font-display,
+h1, h2, h3 {
+  letter-spacing: -0.022em;
+  line-height: 1.15;
+}
+
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* Media tiles */
+.hover-lift img { transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1), opacity .35s ease; }
+.hover-lift:hover img { transform: scale(1.07); }
+
+/* Inputs & textareas get a softer, more premium feel */
+input, textarea, select {
+  border-radius: 12px !important;
+  outline: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: color-mix(in oklab, var(--brand) 55%, var(--border)) !important;
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand) 18%, transparent);
+}
+
+/* Nicer scrollbars */
+* { scrollbar-width: thin; scrollbar-color: color-mix(in oklab, var(--foreground) 22%, transparent) transparent; }
+*::-webkit-scrollbar { width: 9px; height: 9px; }
+*::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--foreground) 18%, transparent);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover { background: color-mix(in oklab, var(--brand) 55%, transparent); background-clip: content-box; }
