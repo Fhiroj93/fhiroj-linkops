@@ -1,3 +1,11 @@
 [build]
   command = "npm run build"
-  publish = "dist"
+  publish = "dist/client"
+
+# Fallback so client-side routes (e.g. /calendar, /review) don't 404 when
+# someone loads them directly instead of navigating there from "/".
+# Harmless to keep even if server functions are working correctly.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
