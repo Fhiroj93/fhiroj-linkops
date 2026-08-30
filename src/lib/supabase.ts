@@ -1,8 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 
 // Publishable (anon) key — safe in the browser. RLS enforces access.
-const SUPABASE_URL = "https://gdcbiaolnroeyeefojuh.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_brVhsc74kAGK_WKHuAZjIw_d65fxkMs";
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
   auth: {
@@ -12,5 +12,4 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
   },
 });
 
-export const SCRAPE_WEBHOOK_URL =
-  "https://n8n.srv971626.hstgr.cloud/webhook/scrape-instant";
+export const SCRAPE_WEBHOOK_URL = import.meta.env.VITE_SCRAPE_WEBHOOK_URL;
