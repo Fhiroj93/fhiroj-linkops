@@ -2,6 +2,8 @@
   command = "npm run build"
   publish = "dist/client"
 
-# Fallback so client-side routes (e.g. /calendar, /review) don't 404 when
-# someone loads them directly instead of navigating there from "/".
-# Harmless to keep even if server functions are working correctly.
+# No custom [[redirects]] here on purpose. @netlify/vite-plugin-tanstack-start
+# (wired up in vite.config.ts) generates its own Netlify Function + redirects
+# for the SSR entry (dist/server/server.js) at build time. A manual catch-all
+# would override that and force every request to the static index.html shell
+# instead of the SSR function.
